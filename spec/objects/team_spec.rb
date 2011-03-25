@@ -13,15 +13,34 @@ describe Team do
     end
 
     it "should have 1 team member after adding member" do
-        @team.add_member(@person)
+        @team.add_member(@person, 13)
 
-        @team.members.should have(1).things
-        @team.members[0].should be_instance_of(TeamMember)
+        @team.should have(1).members
     end
 
-    it "should have member pointing to current team and added person" do
-        @team.add_member(@person)
-        @team.members[0].team.should == @team
-        @team.members[0].person.should == @person
+    it "member of team should be TeamMember" do
+        @team.add_member(@person, 13)
+
+        @team.members.first.should be_instance_of(TeamMember)
+    end
+
+    it "should have member pointing to current team after adding" do
+        @team.add_member(@person, 13)
+        @team.members.first.team.should == @team
+    end
+    
+    it "should have member pointing to added person after adding" do
+        @team.add_member(@person, 13)
+        @team.members.first.person.should == @person
+    end
+
+    it "should have member with team number 13 after adding such member" do
+        @team.add_member(@person, 13)
+        @team.members.first.number.should == 13
+    end
+
+    it "should be able to set team name" do
+        @team.name = "Lietuvos Rytas"
+        @team.name.should == "Lietuvos Rytas"
     end
 end
