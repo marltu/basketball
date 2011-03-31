@@ -20,9 +20,8 @@ class Match
     end
 
     def create_team_members(team)
-        team.members.each.collect { |member| MatchMember.new(member) }
+        team.members.each.collect do |member| 
+            MatchMember.new(member, self) 
+        end
     end
-
-
-
 end
