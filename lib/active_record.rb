@@ -63,7 +63,7 @@ class ActiveRecord
         def relation_many(class_name, attr, method_name)
             define_method method_name do
                 filter = {}
-                filter[attr] = instance_variable_get "@id"
+                filter[attr] = self
                 class_name.send :find_by, filter
             end
         end 
