@@ -27,10 +27,10 @@ describe Match do
 
     it "should create home team player after creating match" do
         match = Match.new(@team_home, @team_away)
-        match.members_home.first.number.should == 13
+        match.members_home.first.team_member.number.should == 13
     end
     it "should create away team player after creating match" do
         match = Match.new(@team_home, @team_away)
-        match.members_away.first.number.should == 14
+        match.members_away.first.team_member.number.should == 14
     end
 end
