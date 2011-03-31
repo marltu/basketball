@@ -2,10 +2,17 @@ require "./lib/active_record.rb"
 
 class ARTestPersonClass < ActiveRecord
     attr_accessor :name
+    attr_accessor :many_id
 end
 
 class ARTestUserClass < ActiveRecord
     attr_accessor :username
+    attr_accessor :person_id
+    relation_one ARTestPersonClass, "person_id", :person
+end
+
+class ARTestManyClass < ActiveRecord
+    relation_many ARTestPersonClass, "many_id", :persons
 end
 
 describe ActiveRecord do
@@ -52,5 +59,23 @@ describe ActiveRecord do
 
         result = ARTestPersonClass.find_by(:name => "PetrasSkaicius")
         result.should be_empty
+    end
+
+    it "should walk through one relation" do
+        instance = ARTestUserClass.new
+        
+        person = ARTestPersonClass.new
+        instance.person_id = person.id
+        
+        instance.person.should == person 
+    end
+    it "should walk through many relation" do
+        instance = ARTestManyClass.new
+
+        person = ARTestPersonClass.new
+        person.many_id = instance.id
+
+        instance.persons.should include person
+
     end
 end

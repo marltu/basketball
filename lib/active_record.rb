@@ -1,16 +1,17 @@
 class ActiveRecord
     attr_accessor :id
 
-    def initialize()
+    def initialize
         @id = self.class.new_increment
 
         self.class.register_instance(self)
     end
 
-    def delete()
+    def delete
         self.class.unregister_instance(self)
         @id = nil
     end
+
 
     class << self
         attr_reader :increment
@@ -53,6 +54,19 @@ class ActiveRecord
             end.values
         end
 
+        def relation_one(class_name, attr, method_name)
+            define_method method_name do
+                class_name.send :get, (instance_variable_get "@#{attr}")
+            end
+        end
+        
+        def relation_many(class_name, attr, method_name)
+            define_method method_name do
+                filter = {}
+                filter[attr] = instance_variable_get "@id"
+                class_name.send :find_by, filter
+            end
+        end 
 
     end
 end
