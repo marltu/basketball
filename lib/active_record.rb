@@ -56,7 +56,7 @@ class ActiveRecord
 
         def relation_one(class_name, attr, method_name)
             define_method method_name do
-                class_name.send :get, (instance_variable_get "@#{attr}")
+                Kernel.const_get(class_name).send :get, (instance_variable_get "@#{attr}")
             end
         end
         
@@ -64,7 +64,7 @@ class ActiveRecord
             define_method method_name do
                 filter = {}
                 filter[attr] = self
-                class_name.send :find_by, filter
+                Kernel.const_get(class_name).send :find_by, filter
             end
         end 
 

@@ -2,16 +2,13 @@ require "./lib/active_record.rb"
 
 class ARTestPersonClass < ActiveRecord
     attr_accessor :name
+    relation_many :ARTestUserClass, "person", :users
 end
 
 class ARTestUserClass < ActiveRecord
     attr_accessor :username
     attr_accessor :person_id
-    relation_one ARTestPersonClass, "person_id", :person
-end
-
-class ARTestPersonClass
-    relation_many ARTestUserClass, "person", :users
+    relation_one :ARTestPersonClass, "person_id", :person
 end
 
 describe ActiveRecord do

@@ -2,13 +2,9 @@ require "./objects/team_member.rb"
 require "./lib/active_record.rb"
 
 class Team < ActiveRecord
-    @name
-
     attr_accessor :name
 
-    def members
-        TeamMember.find_by(:team => self)
-    end
+    relation_many :TeamMember, "team", :members
 
     def add_member(person, number)
         team_member = TeamMember.new(person, self, number)
