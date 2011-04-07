@@ -1,4 +1,2 @@
-require "./event"
-
-class Foul < Event
+class Foul
 end

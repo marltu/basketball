@@ -6,6 +6,10 @@ class Match < ActiveRecord
     attr_reader :members_home
     attr_reader :members_away
 
+    relation_one :Team, "team_home_id", :team_home
+    relation_one :Team, "team_away_id", :team_away
+
+
     def initialize(team_home, team_away)
         super()
 
@@ -13,14 +17,6 @@ class Match < ActiveRecord
         @team_away_id = team_away.id
 
         create_match_members()
-    end
-
-    def team_home
-        Team.get(@team_home_id)
-    end
-
-    def team_away
-        Team.get(@team_away_id)
     end
 
     def members_home
@@ -41,5 +37,19 @@ class Match < ActiveRecord
         team.members.each do |member| 
             MatchMember.new(member, self, team_type) 
         end
+    end
+
+    def points_home
+        total = 0
+        members_home.each { |member| total += member.points}
+
+        return total
+    end
+
+    def points_away
+        total = 0
+        members_away.each { |member| total += member.points}
+
+        return total
     end
 end

@@ -66,7 +66,18 @@ class ActiveRecord
                 filter[attr] = self
                 Kernel.const_get(class_name).send :find_by, filter
             end
-        end 
-
+        end
+        
+        def dump()
+            File.open("db/" + self.to_s + ".dump", "w") do |f|
+                f.write Marshal.dump(@instances)
+            end
+        end
+        
+        def load()
+            File.open("db/" + self.to_s + ".dump", "r") do |f|
+                @instances = Marshal.load(f.read)
+            end
+        end
     end
 end

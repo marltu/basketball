@@ -73,4 +73,22 @@ describe ActiveRecord do
 
         person.users.should include user
     end
+
+    it "should save model data to .dump file" do
+        filename = "db/ARTestPersonClass.dump"
+        if File.exists? filename
+            File.delete(filename)
+        end
+
+        ARTestPersonClass.dump
+
+        File.exists?(filename).should be_true
+    end
+
+    it "should load model data from .dump file" do
+        filename = "db/ARTestPersonClass.dump"
+        ARTestPersonClass.dump
+        ARTestPersonClass.load
+    end
+
 end

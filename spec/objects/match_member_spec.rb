@@ -1,7 +1,19 @@
 require "./objects/match_member.rb"
 
 describe MatchMember do
-    it "should add 2 points to member after registering 2 point throw" do
-        
+    before (:each) do
+        @match = get_empty_match()
+        @home_member = @match.members_home.first
+    end
+    it "should have 0 points after creation" do
+        @home_member.points.should == 0
+    end
+
+    it "should have 0 total throws after creation" do
+        @home_member.throws_total.should == 0
+    end
+    
+    it "should have 0 accurate throws after creation" do
+        @home_member.throws_accurate.should == 0
     end
 end

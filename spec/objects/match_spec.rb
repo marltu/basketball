@@ -33,4 +33,13 @@ describe Match do
         match = Match.new(@team_home, @team_away)
         match.members_away.first.team_member.number.should == 14
     end
+
+    it "home team should have 0 points before match" do
+        match = Match.new(@team_home, @team_away)
+        match.points_home.should == 0
+    end
+    it "away team should have 0 points before match" do
+        match = Match.new(@team_home, @team_away)
+        match.points_away.should == 0
+    end
 end
