@@ -1,7 +1,7 @@
-require "./lib/active_record"
+require "activerecord"
 
 
-class Person < ActiveRecord
+class Person < ActiveRecord::Base
     attr_accessor :name
     attr_accessor :surname
 

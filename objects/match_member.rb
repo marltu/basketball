@@ -2,9 +2,9 @@ require "./objects/team_member"
 require "./objects/match"
 require "./objects/throw"
 require "./objects/foul"
-require "./lib/active_record"
+require "activerecord"
 
-class MatchMember < ActiveRecord
+class MatchMember < ActiveRecord::Base
 
     attr_accessor :team_type
 

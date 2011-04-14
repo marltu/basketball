@@ -1,7 +1,7 @@
 require "./objects/team_member.rb"
-require "./lib/active_record.rb"
+require "activerecord"
 
-class Team < ActiveRecord
+class Team < ActiveRecord::Base
     attr_accessor :name
 
     relation_many :TeamMember, "team", :members

@@ -1,7 +1,7 @@
-require "./lib/active_record"
+require "activerecord"
 require "./objects/match_member"
 
-class Foul < ActiveRecord
+class Foul < ActiveRecord::Base
 
     relation_one :MatchMember, "match_member_id", :match_member
     relation_one :MatchMember, "against_id", :against

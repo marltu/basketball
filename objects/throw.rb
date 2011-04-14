@@ -1,6 +1,6 @@
-require "./lib/active_record"
+require "activerecord"
 
-class Throw < ActiveRecord
+class Throw < ActiveRecord::Base
     attr_accessor :points
     attr_accessor :accurate
 
