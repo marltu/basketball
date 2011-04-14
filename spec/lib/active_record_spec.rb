@@ -96,15 +96,7 @@ describe ActiveRecord do
 
         ARTestPersonClass.dump
 
-        correct = nil
-
-        File.open(filename+'-correct') do |f|
-            correct = f.read
-        end
-
-        File.open(filename) do |f|
-            correct.should == f.read
-        end
+        filename.should be_same_file_as filename+'-correct'
     end
 
     it "should load model data from .dump file" do
