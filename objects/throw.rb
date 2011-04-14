@@ -1,4 +1,4 @@
-require "activerecord"
+require "active_record"
 
 class Throw < ActiveRecord::Base
     attr_accessor :points

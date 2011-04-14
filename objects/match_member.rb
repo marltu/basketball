@@ -2,7 +2,7 @@ require "./objects/team_member"
 require "./objects/match"
 require "./objects/throw"
 require "./objects/foul"
-require "activerecord"
+require "active_record"
 
 class MatchMember < ActiveRecord::Base
 

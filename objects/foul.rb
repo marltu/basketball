@@ -1,4 +1,4 @@
-require "activerecord"
+require "active_record"
 require "./objects/match_member"
 
 class Foul < ActiveRecord::Base

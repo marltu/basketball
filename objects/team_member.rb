@@ -1,6 +1,6 @@
 require "./objects/team"
 
-require "activerecord"
+require "active_record"
 
 class TeamMember < ActiveRecord::Base
     attr_accessor :number

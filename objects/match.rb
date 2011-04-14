@@ -1,7 +1,7 @@
 require "./objects/match_member"
 require "./objects/team"
 require "./objects/errors/action_error"
-require "activerecord"
+require "active_record"
 
 class Match < ActiveRecord::Base
     attr_reader :members_home

@@ -1,5 +1,5 @@
 require "./objects/team_member.rb"
-require "activerecord"
+require "active_record"
 
 class Team < ActiveRecord::Base
     attr_accessor :name
