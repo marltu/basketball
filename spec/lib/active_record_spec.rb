@@ -3,6 +3,11 @@ require "./lib/active_record.rb"
 class ARTestPersonClass < ActiveRecord
     attr_accessor :name
     relation_many :ARTestUserClass, "person", :users
+
+    def initialize(name = nil)
+        @name = name
+        super()
+    end
 end
 
 class ARTestUserClass < ActiveRecord
@@ -12,6 +17,11 @@ class ARTestUserClass < ActiveRecord
 end
 
 describe ActiveRecord do
+    before(:each) do
+        ARTestPersonClass.reset
+        ARTestUserClass.reset
+    end
+
     it "should have numerical id" do
         @instance = ARTestPersonClass.new 
         @instance.id.should be_instance_of Fixnum 
@@ -81,6 +91,9 @@ describe ActiveRecord do
             File.delete(filename)
         end
 
+        ARTestPersonClass.new("Marius")
+        ARTestPersonClass.new("Petras")
+
         ARTestPersonClass.dump
 
         correct = nil
@@ -96,6 +109,9 @@ describe ActiveRecord do
 
     it "should load model data from .dump file" do
         filename = "db/ARTestPersonClass.dump"
+        ARTestPersonClass.new("Marius")
+        ARTestPersonClass.new("Petras")
+        
         ARTestPersonClass.dump
 
         original_instances = ARTestPersonClass.instances

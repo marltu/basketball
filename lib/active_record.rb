@@ -94,6 +94,7 @@ class ActiveRecord
 
         def reset()
             @instances = {}
+            @increment = nil
         end
     end
 end
