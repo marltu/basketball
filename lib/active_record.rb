@@ -12,9 +12,14 @@ class ActiveRecord
         @id = nil
     end
 
+    def ==(o)
+        return @id == o.id
+    end
+
 
     class << self
         attr_reader :increment
+        attr_reader :instances
 
         @instances
 
@@ -43,6 +48,7 @@ class ActiveRecord
         end
 
         def find_by(filter = {})
+            return [] if @instances.nil?
             @instances.select do |id, instance|
                 ok = true
                 filter.each do |attr, value|
@@ -67,17 +73,27 @@ class ActiveRecord
                 Kernel.const_get(class_name).send :find_by, filter
             end
         end
+
+        def dump_filename()
+            return "db/" + self.to_s + ".dump"
+        end
         
         def dump()
-            File.open("db/" + self.to_s + ".dump", "w") do |f|
+            File.open(dump_filename, "w") do |f|
                 f.write Marshal.dump(@instances)
             end
         end
         
         def load()
+            return nil if not File.exists?(dump_filename)
+
             File.open("db/" + self.to_s + ".dump", "r") do |f|
                 @instances = Marshal.load(f.read)
             end
+        end
+
+        def reset()
+            @instances = {}
         end
     end
 end

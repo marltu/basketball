@@ -16,4 +16,8 @@ describe MatchMember do
     it "should have 0 accurate throws after creation" do
         @home_member.throws_accurate.should == 0
     end
+
+    it "should have 0 fould after creation" do
+        @home_member.fouls_total.should == 0
+    end
 end

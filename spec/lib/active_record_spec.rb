@@ -65,6 +65,7 @@ describe ActiveRecord do
         
         instance.person.should == person 
     end
+        
     it "should walk through many relation" do
         person = ARTestPersonClass.new
 
@@ -82,13 +83,43 @@ describe ActiveRecord do
 
         ARTestPersonClass.dump
 
-        File.exists?(filename).should be_true
+        correct = nil
+
+        File.open(filename+'-correct') do |f|
+            correct = f.read
+        end
+
+        File.open(filename) do |f|
+            correct.should == f.read
+        end
     end
 
     it "should load model data from .dump file" do
         filename = "db/ARTestPersonClass.dump"
         ARTestPersonClass.dump
+
+        original_instances = ARTestPersonClass.instances
+        
+        ARTestPersonClass.reset 
         ARTestPersonClass.load
+
+        original_instances.should == ARTestPersonClass.instances
+
+    end
+
+    it "should remove all instances when performing reset" do
+        ARTestPersonClass.new
+        ARTestPersonClass.reset
+        ARTestPersonClass.instances.size.should == 0
+    end
+
+    it "should not be equal when comparing different objects" do
+        ARTestPersonClass.new.should_not == ARTestPersonClass.new
+    end
+
+    it "should be equal when comparing the same object" do
+        o = ARTestPersonClass.new
+        o.should == o
     end
 
 end

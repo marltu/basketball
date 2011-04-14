@@ -1,5 +1,6 @@
 require "./objects/match_member"
 require "./objects/team"
+require "./objects/errors/action_error"
 require "./lib/active_record"
 
 class Match < ActiveRecord
@@ -11,6 +12,10 @@ class Match < ActiveRecord
 
 
     def initialize(team_home, team_away)
+        if team_home == team_away
+            raise ActionError, "Can't create match between the same team"
+        end
+
         super()
 
         @team_home_id = team_home.id
@@ -49,6 +54,15 @@ class Match < ActiveRecord
     def points_away
         total = 0
         members_away.each { |member| total += member.points}
+
+        return total
+    end
+
+    def fouls_total
+        total = 0
+
+        members_home.each { |member| total += member.fouls_total }
+        members_away.each { |member| total += member.fouls_total }
 
         return total
     end

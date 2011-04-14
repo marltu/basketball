@@ -1,5 +1,20 @@
 require "./objects/match"
 require "./objects/team"
+require "./objects/errors/action_error"
+
+
+RSpec::Matchers.define :include_member_with_number do |number|
+    match do |members|
+        @includes = false
+        members.each do |member|
+            if member.team_member.number == number
+                @includes = true
+            end
+        end
+        @includes
+    end
+end
+
 
 describe Match do
     before(:each) do
@@ -27,11 +42,11 @@ describe Match do
 
     it "should create home team player after creating match" do
         match = Match.new(@team_home, @team_away)
-        match.members_home.first.team_member.number.should == 13
+        match.members_home.should include_member_with_number(13)
     end
     it "should create away team player after creating match" do
         match = Match.new(@team_home, @team_away)
-        match.members_away.first.team_member.number.should == 14
+        match.members_away.should include_member_with_number(14)
     end
 
     it "home team should have 0 points before match" do
@@ -41,5 +56,9 @@ describe Match do
     it "away team should have 0 points before match" do
         match = Match.new(@team_home, @team_away)
         match.points_away.should == 0
+    end
+
+    it "should raise exception when creating match between the same team" do
+        lambda { Match.new(@team_home, @team_home) }.should raise_error ActionError
     end
 end

@@ -1,6 +1,7 @@
 require "./objects/team_member"
 require "./objects/match"
 require "./objects/throw"
+require "./objects/foul"
 require "./lib/active_record"
 
 class MatchMember < ActiveRecord
@@ -10,6 +11,7 @@ class MatchMember < ActiveRecord
     relation_one :Match, "match_id", :match
     relation_one :TeamMember, "team_member_id", :team_member
     relation_many :Throw, "match_member", :throws
+    relation_many :Foul, "match_member", :fouls
     
     def initialize(team_member, match, team_type)
         super()
@@ -48,5 +50,9 @@ class MatchMember < ActiveRecord
 
     def accuracy(points = nil)
         throws_accurate(points).fdiv throws_total(points)
+    end
+
+    def fouls_total
+        fouls.size
     end
 end
