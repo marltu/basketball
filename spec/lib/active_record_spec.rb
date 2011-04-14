@@ -96,7 +96,7 @@ describe ActiveRecord do
 
         ARTestPersonClass.dump
 
-        filename.should be_same_file_as filename+'-correct'
+        filename.should be_same_file_as "#{filename}-correct"
     end
 
     it "should load model data from .dump file" do
