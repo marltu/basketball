@@ -4,8 +4,8 @@ require "active_record"
 
 class TeamMember < ActiveRecord::Base
     attr_accessor :number
-    relation_one :Team, "team_id", :team
-    relation_one :Person, "person_id", :person
+    has_one :team
+    has_one :person
 
     def initialize(person, team, number)
         super()
