@@ -1,37 +1,5 @@
 require "./objects/foul"
 
-RSpec::Matchers.define :increment do |method|
-    match do |action|
-        before = @objects.each.collect do |o|
-            o.send(method)    
-        end
-
-        action.call()
-
-        @no_errors = true
-
-        @error_object = nil
-
-        @objects.each_with_index do |o, index|
-            ok = (o.send(method) == before[index] + 1)
-            if (!ok)
-                @error_object = o
-            end
-            @no_errors = @no_errors and ok
-        end
-
-        @no_errors
-    end
-
-    failure_message_for_should do
-        "#{@error_object} #{method} should have increased"
-    end
-
-    chain :on do |objects|
-        @objects = objects
-    end
-end
-
 describe Foul do
     before(:each) do
         @match = get_empty_match

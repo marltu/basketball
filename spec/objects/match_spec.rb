@@ -3,19 +3,6 @@ require "./objects/team"
 require "./objects/errors/action_error"
 
 
-RSpec::Matchers.define :include_member_with_number do |number|
-    match do |members|
-        @includes = false
-        members.each do |member|
-            if member.team_member.number == number
-                @includes = true
-            end
-        end
-        @includes
-    end
-end
-
-
 describe Match do
     before(:each) do
         @team_home = Team.new
