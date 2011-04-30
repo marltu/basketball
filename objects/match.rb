@@ -4,11 +4,12 @@ require "./objects/errors/action_error"
 require "active_record"
 
 class Match < ActiveRecord::Base
-    attr_reader :members_home
-    attr_reader :members_away
 
-    relation_one :Team, "team_home_id", :team_home
-    relation_one :Team, "team_away_id", :team_away
+    has_many :members_home, :class_name => "MatchMember", :conditions => ['team_type = ?', :home]
+    has_many :members_away, :class_name => "MatchMember", :conditions => ['team_type = ?', :away]
+
+    belongs_to :team_home, :class_name => "Team"
+    belongs_to :team_away, :class_name => "Team"
 
 
     def initialize(team_home, team_away)
@@ -16,20 +17,10 @@ class Match < ActiveRecord::Base
             raise ActionError, "Can't create match between the same team"
         end
 
-        super()
-
-        @team_home_id = team_home.id
-        @team_away_id = team_away.id
+        super(:team_home => team_home, :team_away => team_away)
+        save()
 
         create_match_members()
-    end
-
-    def members_home
-        MatchMember.find_by(:match => self, :team_type => :home)
-    end
-    
-    def members_away
-        MatchMember.find_by(:match => self, :team_type => :away)
     end
 
     def create_match_members()
@@ -39,8 +30,8 @@ class Match < ActiveRecord::Base
     end
 
     def create_team_members(team, team_type)
-        team.members.each do |member| 
-            MatchMember.new(member, self, team_type) 
+        team.team_members.each do |member|
+            MatchMember.create(:team_member => member, :match => self, :team_type => team_type)
         end
     end
 

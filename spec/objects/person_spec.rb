@@ -6,18 +6,8 @@ describe Person do
     end
 
     it "should set name and surname" do
-        person = Person.new
-        person.name = "Marius"
-        person.surname = "Grigaitis"
-
+        person = Person.new(:name => "Marius", :surname => "Grigaitis")
         person.name.should == 'Marius'
         person.surname.should == 'Grigaitis'
-    end
-
-    it "should initialize with name and surname" do
-        person = Person.new("Marius", "Grigaitis")
-
-        person.name.should == "Marius"
-        person.surname.should == "Grigaitis"
     end
 end

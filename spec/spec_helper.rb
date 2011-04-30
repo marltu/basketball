@@ -9,16 +9,16 @@ require "./objects/team"
 require "./objects/person"
 require "./objects/match"
 
-def get_empty_match
-    team_home = Team.new
-    team_home.name = "Home team"
+require "./db/connect"
 
-    team_home.add_member(Person.new("Home", "Player"), 13)
+def get_empty_match()
+    team_home = Team.create(:name => "Home Team")
+    person = Person.create(:name => "Home", :surname => "Player")
+    team_home.add_member(person, 13)
 
-    team_away = Team.new
-    team_away.name = "Away team"
-
-    team_away.add_member(Person.new("Away", "Player"), 14)
+    team_away = Team.create(:name => "Away team")
+    person = Person.create(:name => "Away", :surname => "Player")
+    team_away.add_member(person, 14)
 
     return Match.new(team_home, team_away)
 end

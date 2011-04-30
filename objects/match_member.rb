@@ -6,23 +6,15 @@ require "active_record"
 
 class MatchMember < ActiveRecord::Base
 
-    attr_accessor :team_type
-
-    relation_one :Match, "match_id", :match
-    relation_one :TeamMember, "team_member_id", :team_member
-    relation_many :Throw, "match_member", :throws
-    relation_many :Foul, "match_member", :fouls
+    belongs_to :match
+    belongs_to :team_member
     
-    def initialize(team_member, match, team_type)
-        super()
-        @team_member_id = team_member.id
-        @match_id = match.id
-        @team_type = team_type
-    end
-
+    has_many :throws
+    has_many :fouls
+    
     def points
         total = 0
-        throws.each do |thr| 
+        throws(true).each do |thr| 
             if thr.accurate
                 total += thr.points
             end
@@ -33,14 +25,14 @@ class MatchMember < ActiveRecord::Base
 
     def throws_total(points = nil)
         if points.nil?
-            throws.size
+            throws(true).size
         else
-            throws.select { |thr| thr.points == points }.size
+            throws(true).select { |thr| thr.points == points }.size
         end
     end
 
     def throws_accurate(points = nil)
-        accurate = throws.select { |thr| thr.accurate }
+        accurate = throws(true).select { |thr| thr.accurate }
         if points.nil?
             accurate.size
         else
@@ -53,6 +45,6 @@ class MatchMember < ActiveRecord::Base
     end
 
     def fouls_total
-        fouls.size
+        fouls(true).size
     end
 end

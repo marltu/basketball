@@ -5,15 +5,15 @@ require "./objects/errors/action_error"
 
 describe Match do
     before(:each) do
-        @team_home = Team.new
-        @team_home.name = "Home team"
+        @team_home = Team.new(:name => "Home Team")
+        member = Person.new(:name => "Home", :surname => "Player")
+        member.save
+        @team_home.add_member(member, 13)
 
-        @team_home.add_member(Person.new("Home", "Player"), 13)
-
-        @team_away = Team.new
-        @team_away.name = "Away team"
-
-        @team_away.add_member(Person.new("Away", "Player"), 14)
+        @team_away = Team.new(:name => "Away Team")
+        member = Person.new(:name => "Away", :surname => "Player")
+        member.save
+        @team_away.add_member(member, 14)
     end
     
     it "should create match with specified teams" do
