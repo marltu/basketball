@@ -1,0 +1,8 @@
+home_member:
+  match: match1
+  team_type: home
+  team_member: home_member
+away_member:
+  match: match1
+  team_member: away_member
+  team_type: away

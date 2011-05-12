@@ -1,0 +1,8 @@
+home_member:
+  team: team_home
+  person: home_person
+  number: 14
+away_member:
+  team: team_away
+  person: away_person
+  number: 14

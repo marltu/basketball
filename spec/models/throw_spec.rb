@@ -2,8 +2,10 @@ require "spec_helper"
 
 describe Throw do
 
+    fixtures :people, :teams, :matches, :match_members, :team_members
+
     before(:each) do
-        @match = get_empty_match()
+        @match = matches(:match1)
         @home_member = @match.members_home.first
         @away_member = @match.members_away.first
     end

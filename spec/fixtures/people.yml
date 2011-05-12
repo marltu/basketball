@@ -1,0 +1,6 @@
+home_person:
+  name: Home
+  surname: Player
+away_person:
+  name: Away
+  surname: Player
