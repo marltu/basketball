@@ -3,8 +3,12 @@ class Throw < ActiveRecord::Base
 
     validates_numericality_of :points, :greater_than => 0, :less_than_or_equal_to => 3
 
-    def initialize(match_member, points, accurate = true)
-        super(:match_member => match_member, :points => points, :accurate => accurate)
-        save()
+    after_initialize :default_accuracy
+
+    def default_accuracy
+        if (self.accurate.nil?)
+            self.accurate = true
+        end
     end
+
 end

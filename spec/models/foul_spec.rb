@@ -9,6 +9,6 @@ describe Foul do
     end
 
     it "should after foul increase member foul count, team foul count by 1" do
-        lambda { Foul.new(@home_member, @away_member) }.should increment(:fouls_total).on([@home_member, @match])
+        lambda { Foul.create(:match_member => @home_member, :against => @away_member) }.should increment(:fouls_total).on([@home_member, @match])
     end
 end

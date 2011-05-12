@@ -5,8 +5,4 @@ class Foul < ActiveRecord::Base
 
     validates_presence_of :match_member
 
-    def initialize(match_member, against)
-        super(:match_member => match_member, :against => against)
-        save()
-    end
 end
